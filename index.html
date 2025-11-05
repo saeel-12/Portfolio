@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saeel Shinde - Frontend Developer</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(80px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.3) rotate(-10deg); }
+            to { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #1e3a8a, #ea580c, #0369a1, #c2410c);
+            background-size: 400% 400%;
+            animation: gradient 12s ease infinite;
+        }
+        
+        .float { animation: float 4s ease-in-out infinite; }
+        .slide-in-left { animation: slideInLeft 1s ease-out forwards; }
+        .slide-in-right { animation: slideInRight 1s ease-out forwards; }
+        .fade-in-up { animation: fadeInUp 1s ease-out forwards; }
+        .scale-in { animation: scaleIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+        
+        .card {
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #3b82f6, #ea580c, #3b82f6);
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+        }
+        
+        .card:hover::before {
+            opacity: 1;
+        }
+        
+        .card:hover {
+            transform: translateY(-15px) scale(1.03) rotateX(5deg);
+            box-shadow: 0 30px 60px -15px rgba(59, 130, 246, 0.5), 0 0 50px rgba(234, 88, 12, 0.3);
+        }
+        
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .card:hover::after {
+            left: 100%;
+        }
+        
+        .skill-tag {
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+        
+        .skill-tag:hover {
+            transform: scale(1.2) rotate(8deg) translateY(-5px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
+        }
+        
+        .glow-blue {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.3);
+        }
+        
+        .glow-orange {
+            box-shadow: 0 0 30px rgba(234, 88, 12, 0.6), 0 0 60px rgba(234, 88, 12, 0.3);
+        }
+        
+        .text-glow-blue {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.5);
+        }
+        
+        .text-glow-orange {
+            text-shadow: 0 0 20px rgba(234, 88, 12, 0.8), 0 0 40px rgba(234, 88, 12, 0.5);
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        
+        .pulse { animation: pulse 2s ease-in-out infinite; }
+        
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(100px) scale(0.9);
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .section-reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .btn-3d {
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .rotating-border {
+            position: relative;
+        }
+        
+        .rotating-border::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: inherit;
+            padding: 3px;
+            background: linear-gradient(45deg, #3b82f6, #ea580c, #3b82f6, #ea580c);
+            background-size: 300% 300%;
+            animation: gradient 4s ease infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm z-50 border-b border-blue-500/30">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-500">SS</h1>
+                <div class="flex gap-4">
+                    <a href="#home" class="text-gray-300 hover:text-orange-500 transition">Home</a>
+                    <a href="#about" class="text-gray-300 hover:text-blue-400 transition">About</a>
+                    <a href="#skills" class="text-gray-300 hover:text-orange-500 transition">Skills</a>
+                    <a href="#contact" class="text-gray-300 hover:text-blue-400 transition">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-20 left-20 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl float"></div>
+            <div class="absolute top-40 right-20 w-96 h-96 bg-orange-600 rounded-full mix-blend-multiply filter blur-3xl float" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-20 left-1/2 w-96 h-96 bg-blue-800 rounded-full mix-blend-multiply filter blur-3xl float" style="animation-delay: 4s;"></div>
+        </div>
+        
+        <!-- Geometric decorations -->
+        <div class="absolute top-1/4 left-10 w-20 h-20 border-4 border-blue-500 rotate-45 float opacity-30"></div>
+        <div class="absolute bottom-1/4 right-10 w-32 h-32 border-4 border-orange-500 rounded-full float opacity-30" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/2 right-1/4 w-16 h-16 bg-blue-500/20 rotate-12 float" style="animation-delay: 2.5s;"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <div class="mb-8 slide-in-left">
+                    <span class="text-orange-500 text-xl sm:text-2xl font-semibold">Hello, I'm</span>
+                </div>
+                <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold mb-6 slide-in-left delay-1 text-glow-blue">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-orange-500">
+                        Saeel Shinde
+                    </span>
+                </h1>
+                <div class="slide-in-right delay-2 mb-8">
+                    <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-orange-500 text-glow-orange mb-2">
+                        Frontend Developer
+                    </p>
+                    <div class="flex justify-center gap-2 mt-4">
+                        <div class="h-1 w-20 bg-blue-500 rounded"></div>
+                        <div class="h-1 w-20 bg-orange-500 rounded"></div>
+                        <div class="h-1 w-20 bg-blue-500 rounded"></div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-6 mb-12 fade-in-up delay-3">
+                    <a href="mailto:saeelshinde12@gmail.com" class="btn-3d bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-8 py-4 rounded-xl font-bold text-lg shadow-2xl glow-blue transform hover:scale-105 transition">
+                        📧 Email Me
+                    </a>
+                    <a href="tel:8652040135" class="btn-3d bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 px-8 py-4 rounded-xl font-bold text-lg shadow-2xl glow-orange transform hover:scale-105 transition">
+                        📱 Call Me
+                    </a>
+                </div>
+                
+                <div class="flex justify-center gap-8 fade-in-up delay-4">
+                    <a href="https://linkedin.com/in/saeelshinde12" target="_blank" class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-3xl hover:scale-125 hover:rotate-12 transition transform shadow-xl glow-blue">💼</a>
+                    <a href="https://github.com/saeel-12" target="_blank" class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center text-3xl hover:scale-125 hover:rotate-12 transition transform shadow-xl glow-orange">💻</a>
+                    <a href="https://saeel-12.github.io/Portfolio/" target="_blank" class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-3xl hover:scale-125 hover:rotate-12 transition transform shadow-xl glow-blue">🌐</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-gray-900 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-20 right-20 w-64 h-64 border-4 border-blue-500 rounded-full"></div>
+            <div class="absolute bottom-20 left-20 w-48 h-48 border-4 border-orange-500 rotate-45"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 section-reveal">
+            <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-center mb-16">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-500">About Me</span>
+            </h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="card bg-gradient-to-br from-blue-900/50 to-orange-900/50 backdrop-blur-sm p-10 sm:p-12 rounded-3xl glow-blue border-2 border-blue-500/30">
+                    <p class="text-xl sm:text-2xl text-gray-200 leading-relaxed text-center mb-6">
+                        Postgraduate with an M.Sc. in Information Technology. Good with technology, solves problems well, and always ready to learn new things.
+                    </p>
+                    <div class="h-1 w-32 bg-gradient-to-r from-blue-500 to-orange-500 mx-auto rounded-full mb-6"></div>
+                    <p class="text-lg sm:text-xl text-gray-300 text-center">
+                        Honest, reliable, and good work ethic. Works well in both independent and team-based environments.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="py-24 bg-gray-950 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 section-reveal">
+            <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-center mb-16">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-blue-400">Experience</span>
+            </h2>
+            <div class="grid lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+                <!-- <div class="card bg-gradient-to-br from-blue-900 to-blue-950 p-8 sm:p-10 rounded-3xl scale-in border-2 border-blue-500/50">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl transform rotate-12">
+                            💼
+                        </div>
+                        <span class="bg-blue-500 px-4 py-2 rounded-full text-sm font-bold">Current</span>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-3 text-blue-300">WordPress Developer</h3>
+                    <p class="text-xl text-blue-200 mb-2 font-semibold">Anush IT Solution</p>
+                    <p class="text-blue-400 text-lg mb-4">Nov 2025 - Present</p>
+                    <p class="text-gray-300">📍 Mumbai, India</p>
+                    <div class="mt-6 h-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"></div>
+                </div> -->
+                
+                <div class="card bg-gradient-to-br from-orange-900 to-orange-950 p-8 sm:p-10 rounded-3xl scale-in delay-1 border-2 border-orange-500/50">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-16 h-16 bg-orange-600 rounded-2xl flex items-center justify-center text-3xl transform -rotate-12">
+                            🔧
+                        </div>
+                        <span class="bg-orange-500 px-4 py-2 rounded-full text-sm font-bold">2024</span>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-3 text-orange-300">Support Engineer</h3>
+                    <p class="text-xl text-orange-200 mb-2 font-semibold">PATHS</p>
+                    <p class="text-orange-400 text-lg mb-4">May 2024 - Dec 2024</p>
+                    <p class="text-gray-300 mb-4">📍 Mumbai, India</p>
+                    <p class="text-gray-200 italic">Troubleshooting hardware, software and network issues</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 bg-gray-900 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-10 left-10 text-9xl text-blue-500">{'</>'}</div>
+            <div class="absolute bottom-10 right-10 text-9xl text-orange-500">{'</>'}</div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 section-reveal relative z-10">
+            <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-center mb-16">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-500">Technical Skills</span>
+            </h2>
+            <div class="flex flex-wrap justify-center gap-5 max-w-5xl mx-auto">
+                <span class="skill-tag bg-gradient-to-br from-orange-600 to-red-600 px-8 py-4 rounded-2xl text-xl font-bold shadow-2xl border-2 border-orange-400/50">HTML</span>
+                <span class="skill-tag bg-gradient-to-br from-blue-600 to-cyan-600 px-8 py-4 rounded-2xl text-xl font-bold shadow-2xl border-2 border-blue-400/50">CSS</span>
+                <span class="skill-tag bg-gradient-to-br from-orange-500 to-yellow-500 px-8 py-4 rounded-2xl text-xl font-bold shadow-2xl border-2 border-orange-300/50">JavaScript</span>
+                <span class="skill-tag bg-gradient-to-br from-blue-500 to-blue-700 px-8 py-4 rounded-2xl text-xl font-bold shadow-2xl border-2 border-blue-300/50">React Js</span>
+                <span class="skill-tag bg-gradient-to-br from-orange-600 to-pink-600 px-8 py-4 rounded-2xl text-xl font-bold shadow-2xl border-2 border-orange-400/50">Styled-Components</span>
+                <span class="skill-tag bg-gradient-to-br from-cyan-500 to-blue-600 px-8 py-4 rounded-2xl text-xl font-bold shadow-2xl border-2 border-cyan-400/50">TailwindCss</span>
+                <span class="skill-tag bg-gradient-to-br from-blue-700 to-indigo-700 px-8 py-4 rounded-2xl text-xl font-bold shadow-2xl border-2 border-blue-400/50">SQL</span>
+                <span class="skill-tag bg-gradient-to-br from-orange-700 to-red-700 px-8 py-4 rounded-2xl text-xl font-bold shadow-2xl border-2 border-orange-500/50">Git</span>
+                <span class="skill-tag bg-gradient-to-br from-blue-800 to-gray-900 px-8 py-4 rounded-2xl text-xl font-bold shadow-2xl border-2 border-blue-500/50">Github</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="py-24 bg-gray-950 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 section-reveal">
+            <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-center mb-16">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-blue-400">Education</span>
+            </h2>
+            <div class="max-w-5xl mx-auto space-y-8">
+                <div class="card bg-gradient-to-r from-blue-900/80 to-blue-950/80 p-8 rounded-3xl border-2 border-blue-500/50 backdrop-blur-sm">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-4 mb-3">
+                                <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl">🎓</div>
+                                <div>
+                                    <h3 class="text-3xl font-bold text-blue-200">Master of Science (IT)</h3>
+                                    <p class="text-xl text-blue-300">University of Mumbai</p>
+                                </div>
+                            </div>
+                            <p class="text-lg text-blue-400 ml-20">2023 - 2025 | Mumbai</p>
+                        </div>
+                        <div>
+                            <span class="bg-gradient-to-r from-green-500 to-green-600 px-6 py-3 rounded-full font-bold text-lg shadow-xl">Pursuing</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-gradient-to-r from-orange-900/80 to-orange-950/80 p-8 rounded-3xl border-2 border-orange-500/50 backdrop-blur-sm">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-4 mb-3">
+                                <div class="w-16 h-16 bg-orange-600 rounded-2xl flex items-center justify-center text-3xl">📚</div>
+                                <div>
+                                    <h3 class="text-3xl font-bold text-orange-200">Bachelor of Science (IT)</h3>
+                                    <p class="text-xl text-orange-300">University of Mumbai</p>
+                                </div>
+                            </div>
+                            <p class="text-lg text-orange-400 ml-20">2020 - 2023 | Mumbai</p>
+                        </div>
+                        <div>
+                            <span class="bg-gradient-to-r from-yellow-500 to-orange-500 text-gray-900 px-6 py-3 rounded-full font-bold text-xl shadow-xl">75.9%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-gradient-to-r from-blue-900/80 to-blue-950/80 p-8 rounded-3xl border-2 border-blue-500/50 backdrop-blur-sm">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-4 mb-3">
+                                <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl">📖</div>
+                                <div>
+                                    <h3 class="text-3xl font-bold text-blue-200">HSC</h3>
+                                    <p class="text-xl text-blue-300">Maharashtra State Board</p>
+                                </div>
+                            </div>
+                            <p class="text-lg text-blue-400 ml-20">2019 - 2020 | Mumbai</p>
+                        </div>
+                        <div>
+                            <span class="bg-gradient-to-r from-blue-500 to-cyan-500 px-6 py-3 rounded-full font-bold text-xl shadow-xl">55.08%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section class="py-24 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 section-reveal">
+            <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-center mb-16">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-500">Certificates</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                <div class="card bg-gradient-to-br from-orange-900 to-red-900 p-10 rounded-3xl text-center border-2 border-orange-500/50 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-orange-500/20 rounded-full -mr-16 -mt-16"></div>
+                    <div class="relative z-10">
+                        <div class="text-7xl mb-6 pulse">☕</div>
+                        <h3 class="text-2xl sm:text-3xl font-bold mb-3 text-orange-200">Software Java Developer</h3>
+                        <div class="h-1 w-24 bg-orange-500 mx-auto rounded-full mb-4"></div>
+                        <p class="text-xl text-orange-300">QSpider & JSpider</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-gradient-to-br from-blue-900 to-cyan-900 p-10 rounded-3xl text-center border-2 border-blue-500/50 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-32 h-32 bg-blue-500/20 rounded-full -ml-16 -mt-16"></div>
+                    <div class="relative z-10">
+                        <div class="text-7xl mb-6 pulse" style="animation-delay: 1s;">🤖</div>
+                        <h3 class="text-2xl sm:text-3xl font-bold mb-3 text-blue-200">AI & Machine Learning</h3>
+                        <div class="h-1 w-24 bg-blue-500 mx-auto rounded-full mb-4"></div>
+                        <p class="text-xl text-blue-300">College Certification</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="py-24 bg-gray-950">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 section-reveal">
+            <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-center mb-16">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-blue-400">Projects</span>
+            </h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="card bg-gradient-to-br from-blue-900 via-purple-900 to-orange-900 p-10 sm:p-12 rounded-3xl border-2 border-blue-500/50 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full -mr-32 -mt-32"></div>
+                    <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full -ml-32 -mb-32"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-6 mb-6">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-orange-600 rounded-2xl flex items-center justify-center text-4xl transform rotate-6">
+                                🏨
+                            </div>
+                            <h3 class="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-orange-300">
+                                Hotel Management System
+                            </h3>
+                        </div>
+                        <div class="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 rounded-full mb-6"></div>
+                        <p class="text-xl text-gray-200 leading-relaxed">
+                            Comprehensive system for managing hotel operations efficiently with modern technology stack
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Languages Section -->
+    <section class="py-24 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 section-reveal">
+            <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-center mb-16">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-500">Languages</span>
+            </h2>
+            <div class="flex flex-wrap justify-center gap-8">
+                <div class="card bg-gradient-to-br from-orange-800 to-orange-950 p-10 rounded-3xl text-center w-56 border-2 border-orange-500/50">
+                    <div class="w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 pulse">
+                        🗣️
+                    </div>
+                    <h3 class="text-2xl font-bold text-orange-200">Marathi</h3>
+                    <div class="h-1 w-16 bg-orange-500 mx-auto mt-4 rounded-full"></div>
+                </div>
+                <div class="card bg-gradient-to-br from-blue-800 to-blue-950 p-10 rounded-3xl text-center w-56 border-2 border-blue-500/50">
+                    <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 pulse" style="animation-delay: 0.5s;">
+                        🗣️
+                    </div>
+                    <h3 class="text-2xl font-bold text-blue-200">Hindi</h3>
+                    <div class="h-1 w-16 bg-blue-500 mx-auto mt-4 rounded-full"></div>
+                </div>
+                <div class="card bg-gradient-to-br from-orange-800 to-orange-950 p-10 rounded-3xl text-center w-56 border-2 border-orange-500/50">
+                    <div class="w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 pulse" style="animation-delay: 1s;">
+                        🗣️
+                    </div>
+                    <h3 class="text-2xl font-bold text-orange-200">English</h3>
+                    <div class="h-1 w-16 bg-orange-500 mx-auto mt-4 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-gray-950 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-20 w-96 h-96 bg-blue-600 rounded-full filter blur-3xl"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 bg-orange-600 rounded-full filter blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 section-reveal">
+            <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-center mb-16">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-blue-400">Get In Touch</span>
+            </h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="card bg-gradient-to-br from-gray-800 to-gray-900 p-10 sm:p-12 rounded-3xl glow-blue border-2 border-blue-500/30">
+                    <div class="text-center mb-8">
+                        <div class="inline-block p-6 bg-gradient-to-br from-blue-600 to-orange-600 rounded-full mb-6">
+                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <p class="text-2xl font-semibold text-gray-200 mb-2">📍 Santacruz East</p>
+                        <p class="text-xl text-gray-300">Mumbai, India</p>
+                    </div>
+                    
+                    <div class="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 rounded-full mb-8"></div>
+                    
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <a href="mailto:saeelshinde12@gmail.com" class="btn-3d bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-8 py-5 rounded-2xl font-bold text-lg text-center shadow-2xl glow-blue transform hover:scale-105 transition">
+                            <div class="text-3xl mb-2">📧</div>
+                            Email Me
+                        </a>
+                        <a href="tel:8652040135" class="btn-3d bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 px-8 py-5 rounded-2xl font-bold text-lg text-center shadow-2xl glow-orange transform hover:scale-105 transition">
+                            <div class="text-3xl mb-2">📱</div>
+                            Call Me
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-center gap-6">
+                        <a href="https://linkedin.com/in/saeelshinde12" target="_blank" class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center text-2xl hover:scale-110 hover:rotate-6 transition transform shadow-xl">💼</a>
+                        <a href="https://github.com/saeel-12" target="_blank" class="w-14 h-14 bg-orange-600 rounded-xl flex items-center justify-center text-2xl hover:scale-110 hover:rotate-6 transition transform shadow-xl">💻</a>
+                        <a href="https://saeel-12.github.io/Portfolio/" target="_blank" class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center text-2xl hover:scale-110 hover:rotate-6 transition transform shadow-xl">🌐</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="gradient-bg py-12 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-0 left-1/4 w-64 h-64 bg-blue-500 rounded-full filter blur-3xl"></div>
+            <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-orange-500 rounded-full filter blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="mb-6">
+                <h3 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-orange-300 mb-2">
+                    Saeel Shinde
+                </h3>
+                <div class="flex justify-center gap-2">
+                    <div class="h-1 w-16 bg-blue-400 rounded"></div>
+                    <div class="h-1 w-16 bg-orange-400 rounded"></div>
+                </div>
+            </div>
+            <p class="text-xl font-semibold mb-2">© 2025 Saeel Shinde. All Rights Reserved.</p>
+            <p class="text-lg text-gray-200">Built with ❤️ using HTML, CSS & Tailwind</p>
+        </div>
+    </footer>
+
+    <script>
+       
+    </script>
+    <script src="script.js"></script>
+
+</body>
+</html>
